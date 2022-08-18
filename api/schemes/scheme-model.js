@@ -25,7 +25,7 @@ function find() {
     .groupBy("sc.scheme_id");
 }
 
-function findById(scheme_id) {
+async function findById(scheme_id) {
   // EXERCISE B
   /*
     1B- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`:
@@ -38,7 +38,29 @@ function findById(scheme_id) {
           ON sc.scheme_id = st.scheme_id
       WHERE sc.scheme_id = 1
       ORDER BY st.step_number ASC;
+*/
+  const rawRes = await db("schemes as sc")
+    .leftJoin("steps as st", "sc.scheme_id", "=", "st.scheme_id")
+    .select("sc.scheme_name", "st.*")
+    .where("sc.scheme_id", scheme_id)
+    .orderBy("st.step_number");
 
+  const modRes = {
+    scheme_id: rawRes[0].scheme_id ? rawRes[0].scheme_id : scheme_id,
+    scheme_name: rawRes[0].scheme_name,
+    steps: rawRes[0].scheme_id
+      ? rawRes.map((scheme) => {
+          return {
+            step_id: scheme.step_id,
+            step_number: scheme.step_number,
+            instructions: scheme.instructions,
+          };
+        })
+      : [],
+  };
+
+  return modRes;
+  /*
     2B- When you have a grasp on the query go ahead and build it in Knex
     making it parametric: instead of a literal `1` you should use `scheme_id`.
 
