@@ -50,7 +50,7 @@ router.get("/", (req, res, next) => {
           "instructions": "profit"
       }
     ]
-  }checkSchemeId,
+  }
 */
 router.get("/:scheme_id", (req, res, next) => {
   const { scheme_id } = req.params;
@@ -78,10 +78,10 @@ router.get("/:scheme_id", (req, res, next) => {
       "step_number": 2,
       "instructions": "profit",
       "scheme_name": "Get Rich Quick"
-    }
+    } 
   ]
 */
-router.get("/:scheme_id/steps", checkSchemeId, (req, res, next) => {
+router.get("/:scheme_id/steps", (req, res, next) => {
   const { scheme_id } = req.params;
 
   Schemes.findSteps(scheme_id)
@@ -139,9 +139,8 @@ router.post("/:scheme_id/steps", checkSchemeId, validateStep, (req, res, next) =
     })
     .catch(next);
 });
-
+// eslint-disable-next-line
 router.use((err, req, res, next) => {
-  // eslint-disable-line
   res.status(err.status || 500).json({
     sageAdvice: "Finding the real error is 90% of the bug fix",
     message: err.message,
