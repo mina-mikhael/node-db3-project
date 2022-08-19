@@ -52,7 +52,7 @@ router.get("/", (req, res, next) => {
     ]
   }
 */
-router.get("/:scheme_id", (req, res, next) => {
+router.get("/:scheme_id", checkSchemeId, (req, res, next) => {
   const { scheme_id } = req.params;
 
   Schemes.findById(scheme_id)
@@ -81,7 +81,7 @@ router.get("/:scheme_id", (req, res, next) => {
     } 
   ]
 */
-router.get("/:scheme_id/steps", (req, res, next) => {
+router.get("/:scheme_id/steps", checkSchemeId, (req, res, next) => {
   const { scheme_id } = req.params;
 
   Schemes.findSteps(scheme_id)
@@ -98,9 +98,9 @@ router.get("/:scheme_id/steps", (req, res, next) => {
   {
     "scheme_id": 8,
     "scheme_name": "Take Ovah"
-  }validateScheme
+  }
 */
-router.post("/", (req, res, next) => {
+router.post("/", validateScheme, (req, res, next) => {
   const scheme = req.body;
 
   Schemes.add(scheme)
@@ -127,9 +127,9 @@ router.post("/", (req, res, next) => {
       "instructions": "and yet more questing",
       "scheme_name": "Find the Holy Grail"
     }
-  ], checkSchemeId, validateStep
+  ]
 */
-router.post("/:scheme_id/steps", (req, res, next) => {
+router.post("/:scheme_id/steps", checkSchemeId, validateStep, (req, res, next) => {
   const step = req.body;
   const { scheme_id } = req.params;
 
