@@ -98,9 +98,9 @@ router.get("/:scheme_id/steps", (req, res, next) => {
   {
     "scheme_id": 8,
     "scheme_name": "Take Ovah"
-  }
+  }validateScheme
 */
-router.post("/", validateScheme, (req, res, next) => {
+router.post("/", (req, res, next) => {
   const scheme = req.body;
 
   Schemes.add(scheme)

@@ -148,11 +148,14 @@ async function findSteps(scheme_id) {
   return modRes;
 }
 
-function add(scheme) {
+async function add(scheme) {
   // EXERCISE D
   /*
     1D- This function creates a new scheme and resolves to _the newly created scheme_.
   */
+
+  const newScheme = await db("schemes").insert(scheme);
+  return findById(newScheme[0]);
 }
 
 function addStep(scheme_id, step) {
