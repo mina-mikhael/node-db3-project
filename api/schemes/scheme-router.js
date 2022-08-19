@@ -127,9 +127,9 @@ router.post("/", (req, res, next) => {
       "instructions": "and yet more questing",
       "scheme_name": "Find the Holy Grail"
     }
-  ]
+  ], checkSchemeId, validateStep
 */
-router.post("/:scheme_id/steps", checkSchemeId, validateStep, (req, res, next) => {
+router.post("/:scheme_id/steps", (req, res, next) => {
   const step = req.body;
   const { scheme_id } = req.params;
 
